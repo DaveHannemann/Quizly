@@ -2,12 +2,18 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from rest_framework import status
 from quizzes.models import Quiz
+from .serializers import QuizSerializer
 
 from quizzes.services.pipeline_service import create_quiz
 
 import traceback
 
 class QuizzesView(APIView):
+
+    def get(self, request):
+        quizzes = Quiz.objects.all().order_by("-created_at")
+        serializer = QuizSerializer(quizzes, many=True)
+        return Response(serializer.data)
 
     def post(self, request):
         url = request.data.get("url")
@@ -28,10 +34,5 @@ class QuizzesView(APIView):
             questions=quiz_data.get("questions")
         )
 
-        return Response({
-            "id": quiz.id,
-            "title": quiz.title,
-            "description": quiz.description,
-            "video_url": quiz.video_url,
-            "questions": quiz.questions
-        }, status=201)
+        serializer = QuizSerializer(quiz)
+        return Response(serializer.data, status=201)
