@@ -8,3 +8,4 @@ class Quiz(models.Model):
     updated_at = models.DateTimeField(auto_now=True)
     video_url = models.URLField()
     questions = models.JSONField()
+    created_by = models.ForeignKey('auth.User', on_delete=models.CASCADE)

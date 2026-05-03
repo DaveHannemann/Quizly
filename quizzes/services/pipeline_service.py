@@ -1,12 +1,15 @@
 import os
 import json
 
-from .youtube_service import download_audio
+from .youtube_service import download_audio, validate_youtube_url, normalize_youtube_url
 from .whisper_service import transcribe_audio
 from .gemini_service import generate_quiz
 
 
 def create_quiz(url: str):
+    url = normalize_youtube_url(url)
+    validate_youtube_url(url)
+
     audio_path = download_audio(url)
 
     try:
