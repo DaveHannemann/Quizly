@@ -6,6 +6,13 @@ from .serializers import CustomTokenObtainPairSerializer, RegistrationSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
 
 class RegistrationView(APIView):
+    """
+    Handles user registration.
+
+    Accepts user data (e.g. username, email, password),
+    validates it via RegistrationSerializer, and creates a new user.
+    """
+    
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -25,6 +32,18 @@ class RegistrationView(APIView):
         
     
 class CookieTokenObtainPairView(TokenObtainPairView):
+    """
+    Authenticates a user and issues JWT tokens via HTTP-only cookies.
+
+    Overrides the default TokenObtainPairView to:
+        - Return user information
+        - Store access and refresh tokens in cookies instead of response body
+
+    Cookies:
+        - access_token (short-lived)
+        - refresh_token (long-lived)
+    """
+
     permission_classes = [AllowAny]
     serializer_class = CustomTokenObtainPairSerializer
 
@@ -66,6 +85,10 @@ class CookieTokenObtainPairView(TokenObtainPairView):
         
 
 class LogoutView(APIView):
+    """
+    Logs out the authenticated user by removing JWT cookies.
+    """
+
     permission_classes = [IsAuthenticated]
 
     def post(self, request):
@@ -75,6 +98,14 @@ class LogoutView(APIView):
         return response
     
 class CookieTokenRefreshView(TokenRefreshView):
+    """
+    Refreshes the access token using the refresh token stored in cookies.
+
+    Overrides the default TokenRefreshView to:
+        - Read refresh token from HTTP-only cookie
+        - Generate a new access token and update cookie
+    """
+
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):

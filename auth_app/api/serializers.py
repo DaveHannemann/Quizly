@@ -4,6 +4,13 @@ from rest_framework_simplejwt.serializers import TokenObtainPairSerializer
 from django.contrib.auth import get_user_model
 
 class RegistrationSerializer(serializers.ModelSerializer):
+    """
+    Handles:
+        - Password confirmation validation
+        - Unique email validation
+        - Secure user creation with hashed password
+    """
+    
     confirmed_password = serializers.CharField(write_only=True)
 
     class Meta:
@@ -41,6 +48,15 @@ class RegistrationSerializer(serializers.ModelSerializer):
 User = get_user_model()
 
 class CustomTokenObtainPairSerializer(TokenObtainPairSerializer):
+    """
+    Custom JWT serializer for user authentication.
+
+    Overrides default validation to:
+        - Manually verify username and password
+        - Provide consistent error messages
+        - Return standard JWT token pair (access + refresh)
+    """
+
     username = serializers.CharField(write_only=True)
     password = serializers.CharField(write_only=True)
 
