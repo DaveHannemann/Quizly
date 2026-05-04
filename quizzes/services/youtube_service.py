@@ -5,6 +5,15 @@ from urllib.parse import urlparse, parse_qs
 
 
 def download_audio(url: str) -> str:
+    """
+    Download audio from a YouTube video and return the local file path.
+
+    Steps:
+        - Downloads best available audio stream using yt-dlp
+        - Stores file in a temporary directory
+        - Returns absolute path to downloaded file
+    """
+
     temp_dir = tempfile.mkdtemp()
 
     ydl_opts = {
@@ -29,6 +38,10 @@ def download_audio(url: str) -> str:
     return file_path
 
 def validate_youtube_url(url: str):
+    """
+    Validate whether a given URL is a valid and accessible YouTube video.
+    """
+
     ydl_opts = {
         "quiet": True,
         "skip_download": True,
@@ -41,6 +54,14 @@ def validate_youtube_url(url: str):
         raise ValueError("Unknown YouTube-URL")
 
 def normalize_youtube_url(url: str) -> str:
+    """
+    Normalize different YouTube URL formats into a standard watch URL.
+
+    Supported formats:
+        - https://www.youtube.com/watch?v=...
+        - https://youtu.be/...
+    """
+    
     parsed = urlparse(url)
 
     if "youtube.com" in parsed.netloc:

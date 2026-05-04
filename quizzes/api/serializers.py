@@ -16,6 +16,17 @@ class QuizSerializer(serializers.ModelSerializer):
         fields = ['id', 'title', 'description', 'created_at', 'updated_at', 'video_url', 'questions']
 
 class QuizUpdateSerializer(serializers.ModelSerializer):
+    """
+    Serializer for updating quiz metadata.
+
+    Restricts updates strictly to allowed fields and rejects
+    any unexpected input fields.
+
+    Allowed fields:
+        - title
+        - description
+    """
+    
     class Meta:
         model = Quiz
         fields = ['title', 'description']

@@ -10,6 +10,13 @@ from quizzes.services.pipeline_service import create_quiz
 import traceback
 
 class QuizzesView(APIView):
+    """
+    Handles listing and creation of quizzes.
+
+    Permissions:
+        - Admin users can access all quizzes
+        - Regular users can only access their own quizzes
+    """
     permission_classes = [IsAdminOrQuizCreator]
 
     def get(self, request):
@@ -21,6 +28,16 @@ class QuizzesView(APIView):
         return Response(serializer.data)
 
     def post(self, request):
+        """
+        Create a new quiz from a provided video URL.
+
+        Flow:
+            1. Normalize input (map "url" → "video_url")
+            2. Validate input via QuizCreateSerializer
+            3. Process video via create_quiz service
+            4. Store generated quiz in database
+        """
+
         data = request.data.copy()
         data["video_url"] = data.pop("url", None)
 
