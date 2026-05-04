@@ -8,9 +8,7 @@ class IsAdminOrQuizCreator(BasePermission):
         return False
 
     def has_object_permission(self, request, view, obj):
-        # Allow access if the user is an admin
         if request.user and request.user.is_staff:
             return True
         
-        # Allow access if the user is the creator of the quiz
         return obj.created_by == request.user
