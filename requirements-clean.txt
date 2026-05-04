@@ -1,0 +1,13 @@
+Django>=5.0,<7.0
+djangorestframework
+djangorestframework_simplejwt
+django-cors-headers
+django-filter
+
+yt-dlp
+openai-whisper
+torch
+
+google-genai
+
+python-dotenv
