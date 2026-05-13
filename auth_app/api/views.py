@@ -4,6 +4,7 @@ from rest_framework.permissions import AllowAny, IsAuthenticated
 from rest_framework.response import Response
 from .serializers import CustomTokenObtainPairSerializer, RegistrationSerializer
 from rest_framework_simplejwt.views import TokenObtainPairView, TokenRefreshView
+from .utils import set_access_cookie, set_refresh_cookie, delete_auth_cookies
 
 class RegistrationView(APIView):
     """
@@ -18,14 +19,9 @@ class RegistrationView(APIView):
     def post(self, request):
         serializer = RegistrationSerializer(data=request.data)
 
-        data = {}
+
         if serializer.is_valid():
-            saved_account = serializer.save()
-            data = {
-                'username': saved_account.username,
-                'email': saved_account.email,
-                'user_id': saved_account.pk
-            }
+            serializer.save()
             return Response({'detail': 'User created successfully!'}, status=status.HTTP_201_CREATED)
         else:
             return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
@@ -63,21 +59,8 @@ class CookieTokenObtainPairView(TokenObtainPairView):
 
             response = Response({"detail": "Login successfully!", 'user': data})
 
-            response.set_cookie(
-                key="access_token",
-                value=str(access),
-                httponly=True,
-                secure=True,
-                samesite="Lax"
-            )
-
-            response.set_cookie(
-                key="refresh_token",
-                value=str(refresh),
-                httponly=True,
-                secure=True,
-                samesite="Lax"
-            )
+            set_access_cookie(response, access)
+            set_refresh_cookie(response, refresh)
 
             return response
         else:
@@ -93,8 +76,7 @@ class LogoutView(APIView):
 
     def post(self, request):
         response = Response({"detail": "Log-Out successfully! All Tokens will be deleted. Refresh token is now invalid."})
-        response.delete_cookie("access_token")
-        response.delete_cookie("refresh_token")
+        delete_auth_cookies(response)
         return response
     
 class CookieTokenRefreshView(TokenRefreshView):
@@ -123,12 +105,6 @@ class CookieTokenRefreshView(TokenRefreshView):
         access_token = serializer.validated_data.get("access")
 
         response = Response({"detail": "Token refreshed successfully!"})
-        response.set_cookie(
-            key="access_token",
-            value=access_token,
-            httponly=True,
-            secure=True,
-            samesite="Lax"
-        )
+        set_access_cookie(response, access_token)
 
         return response
