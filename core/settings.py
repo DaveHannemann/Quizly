@@ -24,7 +24,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a+&tt1w$56$rn&%yb_jbc&_k_jmhfg@t20)ukpzw2@a7(e#wg8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = True
+DEBUG = False
 
 ALLOWED_HOSTS = ["34.105.215.66",
 "quizly.david-hannemann.de"]
@@ -131,6 +131,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:5500",
     "http://quizly.david-hannemann.de",
     "https://quizly.david-hannemann.de",
+    "https://david-hannemann.de",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -152,4 +153,5 @@ SIMPLE_JWT = {
 CSRF_TRUSTED_ORIGINS = [
     "http://quizly.david-hannemann.de",
     "https://quizly.david-hannemann.de",
+    "https://david-hannemann.de",
 ]
