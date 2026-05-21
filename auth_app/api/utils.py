@@ -1,7 +1,7 @@
 COOKIE_SETTINGS = {
     "httponly": True,
     "secure": True,
-    "samesite": "Lax",
+    "samesite": "None",
 }
 
 
