@@ -14,7 +14,7 @@ class RegistrationView(APIView):
     Accepts user data (e.g. username, email, password),
     validates it via RegistrationSerializer, and creates a new user.
     """
-    
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request):
@@ -40,7 +40,7 @@ class CookieTokenObtainPairView(TokenObtainPairView):
         - access_token (short-lived)
         - refresh_token (long-lived)
     """
-
+    authentication_classes = []
     permission_classes = [AllowAny]
     serializer_class = CustomTokenObtainPairSerializer
 
@@ -93,7 +93,7 @@ class CookieTokenRefreshView(TokenRefreshView):
         - Read refresh token from HTTP-only cookie
         - Generate a new access token and update cookie
     """
-
+    authentication_classes = []
     permission_classes = [AllowAny]
 
     def post(self, request, *args, **kwargs):
