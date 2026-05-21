@@ -132,6 +132,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://quizly.david-hannemann.de",
     "https://quizly.david-hannemann.de",
     "https://david-hannemann.de",
+    "https://www.david-hannemann.de",
 ]
 
 CORS_ALLOW_CREDENTIALS = True
@@ -154,4 +155,5 @@ CSRF_TRUSTED_ORIGINS = [
     "http://quizly.david-hannemann.de",
     "https://quizly.david-hannemann.de",
     "https://david-hannemann.de",
+    "https://www.david-hannemann.de",
 ]
