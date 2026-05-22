@@ -2,6 +2,7 @@ COOKIE_SETTINGS = {
     "httponly": True,
     "secure": True,
     "samesite": "None",
+    "domain": ".david-hannemann.de",
 }
 
 
