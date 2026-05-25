@@ -24,10 +24,13 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 SECRET_KEY = 'django-insecure-a+&tt1w$56$rn&%yb_jbc&_k_jmhfg@t20)ukpzw2@a7(e#wg8'
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 ALLOWED_HOSTS = ["34.105.215.66",
-"quizly.david-hannemann.de"]
+"quizly.david-hannemann.de",
+"127.0.0.1",
+"localhost",
+]
 
 
 # Application definition
@@ -124,7 +127,7 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/6.0/howto/static-files/
 
 STATIC_URL = 'static/'
-STATIC_ROOT = BASE_DIR / "static"
+STATIC_ROOT = BASE_DIR / "staticfiles"
 
 CORS_ALLOWED_ORIGINS = [
     "http://127.0.0.1:5500",

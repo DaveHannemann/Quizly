@@ -101,13 +101,13 @@ Clone the repository:
 
 ```
 git clone <repository-url>
-cd backend
+cd Quizly
 ```
 
 Create a virtual environment:
 
 ```
-python -m venv venv
+python -m venv .venv
 ```
 
 Activate the environment:
@@ -115,13 +115,33 @@ Activate the environment:
 Linux / Mac
 
 ```
-source venv/bin/activate
+source .venv/bin/activate
 ```
 
 Windows
 
 ```
-venv\Scripts\activate
+.venv\Scripts\activate
+```
+
+Install FFmpeg (required for Whisper and yt-dlp):
+
+Linux
+
+```
+sudo apt install ffmpeg
+```
+
+Windows
+
+```
+winget install ffmpeg
+```
+
+macOS
+
+```
+brew install ffmpeg
 ```
 
 Install dependencies:
@@ -129,6 +149,14 @@ Install dependencies:
 ```
 pip install -r requirements.txt
 ```
+
+Create a `.env` file in the project root:
+
+```env
+GEMINI_API_KEY=your_api_key_here
+```
+
+You can generate a Gemini API key from Google AI Studio.
 
 Run migrations:
 
